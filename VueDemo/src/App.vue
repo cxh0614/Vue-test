@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header />
-      <Main />
+      <Main :todos="todos"/>
       <Footer />
     </div>
   </div>
@@ -17,6 +17,16 @@ import Main from './components/Main.vue'
 import Footer from './components/Footer.vue'
 
 export default {
+  data () {
+    return {
+      todos: [
+        {completed: false, title: '吃饭'},
+        {completed: true, title: '睡觉'},
+        {completed: false, title: '抱郭德纲'}
+      ]
+    }
+  },
+
   components: {
      Header, Main, Footer
   }
