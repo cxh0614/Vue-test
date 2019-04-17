@@ -2,7 +2,7 @@
   <div id="root">
   <div class="todo-container">
     <div class="todo-wrap">
-      <Header />
+      <Header :addTodo="addTodo"/>
       <Main :todos="todos"/>
       <Footer />
     </div>
@@ -29,6 +29,12 @@ export default {
 
   components: {
      Header, Main, Footer
+  },
+
+  methods: {
+    addTodo (todo) {
+      this.todos.unshift(todo)
+    }
   }
 }
 </script>
