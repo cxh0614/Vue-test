@@ -20,8 +20,7 @@ export default {
   data () {
     return {
       bgColor: 'white',
-      isShow: false,
-      completed: false
+      isShow: false
     }
   },
 
@@ -47,9 +46,15 @@ export default {
     }
   },
 
-  watch: {
-    completed (value) {
-      this.selectTodo(this.todo, value)
+  computed: {
+    completed: {
+      get () {
+        return this.todo.completed
+      },
+
+      set (value) {
+        this.selectTodo(this.todo, value)
+      }
     }
   }
 }

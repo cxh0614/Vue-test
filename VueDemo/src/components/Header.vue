@@ -27,6 +27,7 @@ export default {
       }
 
       const todo = {
+        id: Date.now(),
         title,
         completed: false
       }

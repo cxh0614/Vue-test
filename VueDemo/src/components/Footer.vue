@@ -25,7 +25,7 @@ export default {
 
     checkAll: {
       get () {
-        return this.todos.length === this.completedCount
+        return this.todos.length === this.completedCount && this.completedCount > 0
       },
 
       set (val) {
