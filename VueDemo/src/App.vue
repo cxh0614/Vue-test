@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
-      <Main :todos="todos"/>
+      <Main :todos="todos" :deleteTodo="deleteTodo"/>
       <Footer />
     </div>
   </div>
@@ -34,6 +34,10 @@ export default {
   methods: {
     addTodo (todo) {
       this.todos.unshift(todo)
+    },
+
+    deleteTodo (index) {
+      this.todos.splice(index, 1)
     }
   }
 }
