@@ -15,15 +15,12 @@
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 import Footer from './components/Footer.vue'
+import StorageUtils from './utils/storageUtils.js'
 
 export default {
   data () {
     return {
-      todos: [
-        {completed: false, title: '吃饭'},
-        {completed: true, title: '睡觉'},
-        {completed: false, title: '抱郭德纲'}
-      ]
+      todos: StorageUtils.getTodos()
     }
   },
 
@@ -47,7 +44,17 @@ export default {
     deleteAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
     }
-  }
+  },
+
+    watch: {
+      todos: {
+        deep: true,
+        // handler: function (val) {
+        //   localStorage.setItem('todos_key', JSON.stringify(val))
+        // }
+        handler: StorageUtils.saveTodos
+      }
+    }
 }
 </script>
 
