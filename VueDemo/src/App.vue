@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
-      <Main :todos="todos" :deleteTodo="deleteTodo"/>
+      <Main :todos="todos" :deleteTodo="deleteTodo" :selectTodo="selectTodo"/>
       <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
@@ -43,6 +43,10 @@ export default {
 
     deleteAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
+    },
+
+    selectTodo (todo, isCheck) {
+      todo.completed = isCheck
     }
   },
 

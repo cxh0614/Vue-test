@@ -1,7 +1,7 @@
 <template>
   <li :style="{background: bgColor}" @mouseenter="handleEnter(true)" @mouseleave="handleEnter(false)">
     <label>
-      <input type="checkbox" v-model="todo.completed"/>
+      <input type="checkbox" v-model="completed"/>
       <span>{{todo.title}}</span>
     </label>
     <button class="btn btn-danger" v-show="isShow" @click="deleteItem">删除</button>
@@ -13,14 +13,20 @@ export default {
   props: {
     todo: Object,
     deleteTodo: Function,
-    index: Number
+    index: Number,
+    selectTodo: Function
   },
 
   data () {
     return {
       bgColor: 'white',
-      isShow: false
+      isShow: false,
+      completed: false
     }
+  },
+
+  beforeMount () {
+    this.completed = this.todo.completed
   },
 
   methods: {
@@ -38,6 +44,12 @@ export default {
       if (window.confirm(`确认要删除${this.todo.title}吗？`)) {
         this.deleteTodo(this.index)
       }
+    }
+  },
+
+  watch: {
+    completed (value) {
+      this.selectTodo(this.todo, value)
     }
   }
 }
