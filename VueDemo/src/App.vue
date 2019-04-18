@@ -4,7 +4,7 @@
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
       <Main :todos="todos" :deleteTodo="deleteTodo"/>
-      <Footer />
+      <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
 </div>
@@ -38,6 +38,14 @@ export default {
 
     deleteTodo (index) {
       this.todos.splice(index, 1)
+    },
+
+    selectAllTodos (isCheck) {
+      this.todos.forEach(todo => (todo.completed = isCheck))
+    },
+
+    deleteAllCompleted () {
+      this.todos = this.todos.filter(todo => !todo.completed)
     }
   }
 }
