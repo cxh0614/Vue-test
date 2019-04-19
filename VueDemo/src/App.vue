@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
-      <Main :todos="todos" :deleteTodo="deleteTodo" :selectTodo="selectTodo"/>
+      <Main :todos="todos" :selectTodo="selectTodo"/>
       <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
@@ -12,6 +12,7 @@
 
 <script>
 
+import Pubsub from 'pubsub-js'
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
 import Footer from './components/Footer.vue'
@@ -24,6 +25,12 @@ export default {
     }
   },
 
+  mounted () {
+    Pubsub.subscribe('deleteTodo', (msgName, index) => {
+      this.todos.splice(index, 1)
+    })
+  },
+
   components: {
      Header, Main, Footer
   },
@@ -33,9 +40,9 @@ export default {
       this.todos.unshift(todo)
     },
 
-    deleteTodo (index) {
-      this.todos.splice(index, 1)
-    },
+    // deleteTodo (index) {
+    //   this.todos.splice(index, 1)
+    // },
 
     selectAllTodos (isCheck) {
       this.todos.forEach(todo => (todo.completed = isCheck))
