@@ -4,7 +4,11 @@
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
       <Main :todos="todos" :selectTodo="selectTodo"/>
-      <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
+      <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted">
+        <input slot="left" type="checkbox" v-model="checkAll"/>
+        <span slot="middle">已完成{{completedCount}} / 全部{{todos.length}}</span>
+        <button slot="right" class="btn btn-danger" v-show="completedCount > 0" @click="deleteAllCompleted">清除已完成任务</button>
+      </Footer>
     </div>
   </div>
 </div>
@@ -57,15 +61,31 @@ export default {
     }
   },
 
-    watch: {
-      todos: {
-        deep: true,
-        // handler: function (val) {
-        //   localStorage.setItem('todos_key', JSON.stringify(val))
-        // }
-        handler: StorageUtils.saveTodos
+  computed: {
+    completedCount () {
+      return this.todos.reduce((pre, todo) => pre + (todo.completed ? 1 : 0), 0)
+    },
+
+    checkAll: {
+      get () {
+        return this.todos.length === this.completedCount && this.completedCount > 0
+      },
+
+      set (val) {
+        return this.selectAllTodos(val)
       }
     }
+  },
+
+  watch: {
+    todos: {
+      deep: true,
+      // handler: function (val) {
+      //   localStorage.setItem('todos_key', JSON.stringify(val))
+      // }
+      handler: StorageUtils.saveTodos
+    }
+  }
 }
 </script>
 
