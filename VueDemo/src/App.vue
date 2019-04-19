@@ -3,7 +3,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header :addTodo="addTodo"/>
-      <Main :todos="todos" :selectTodo="selectTodo"/>
+      <Main :todos="todos" />
       <Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted">
         <input slot="left" type="checkbox" v-model="checkAll"/>
         <span slot="middle">已完成{{completedCount}} / 全部{{todos.length}}</span>
@@ -16,6 +16,7 @@
 
 <script>
 
+import vm from './vm.js'
 import Pubsub from 'pubsub-js'
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
@@ -32,6 +33,10 @@ export default {
   mounted () {
     Pubsub.subscribe('deleteTodo', (msgName, index) => {
       this.todos.splice(index, 1)
+    }),
+
+    vm.$on('selectTodo', (todo, isCheck) => {
+      this.selectTodo (todo, isCheck)
     })
   },
 

@@ -11,12 +11,12 @@
 <script>
 
 import Pubsub from 'pubsub-js'
+import vm from '../vm.js'
 
 export default {
   props: {
     todo: Object,
-    index: Number,
-    selectTodo: Function
+    index: Number
   },
 
   data () {
@@ -55,7 +55,8 @@ export default {
       },
 
       set (value) {
-        this.selectTodo(this.todo, value)
+        // this.selectTodo(this.todo, value)
+        vm.$emit('selectTodo', this.todo, value)
       }
     }
   }
